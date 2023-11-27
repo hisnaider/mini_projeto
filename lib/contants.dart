@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 
-const double normalPadding = 10;
-const double hugePadding = 24;
-const double bigPadding = 12;
+const String userId = "6123b7b7f72a5e8a91d6bd44";
 
 const Map<int, String> kmonthNames = {
   1: "Janeiro",
@@ -19,31 +17,13 @@ const Map<int, String> kmonthNames = {
   12: "Dezembro",
 };
 
-const Map<String, dynamic> kpayslip = {
-  "gross": {
-    "name": {
-      "pt-br": "Bruto",
-      "en-us": "Gross",
-    },
-    "color": Color.fromRGBO(39, 185, 158, 1),
-    "icon": Icons.add_rounded
-  },
-  "discounts": {
-    "name": {
-      "pt-br": "Desconto",
-      "en-us": "Discount",
-    },
-    "color": Color.fromRGBO(233, 73, 59, 1),
-    "icon": Icons.remove_rounded
-  },
-  "liquid": {
-    "name": {
-      "pt-br": "Liquido",
-      "en-us": "Liquid",
-    },
-    "color": Colors.blue,
-    "icon": Icons.done_rounded
-  }
-};
+enum PayslipEnum {
+  gross("Bruto", Color.fromRGBO(39, 185, 158, 1), Icons.add_rounded),
+  discounts("Descontos", Color.fromRGBO(233, 73, 59, 1), Icons.remove_rounded),
+  liquid("Liquido", Colors.blue, Icons.done_rounded);
 
-enum PayslipEnum { gross, discounts, liquid }
+  const PayslipEnum(this.name, this.color, this.icon);
+  final String name;
+  final Color color;
+  final IconData icon;
+}

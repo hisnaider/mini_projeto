@@ -1,5 +1,4 @@
 import 'package:dio/dio.dart';
-import 'package:mini_projeto/contants.dart';
 
 class MockAPI {
   final baseURL = "https://655e6c86879575426b438237.mockapi.io/mini_projeto";

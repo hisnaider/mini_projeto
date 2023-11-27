@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:mini_projeto/class/state_manager.dart';
 import 'package:mini_projeto/components/user_card_widget.dart';
-import 'package:mini_projeto/contants.dart';
+import 'package:mini_projeto/screens/empty/body.dart';
 import 'package:mini_projeto/screens/payslip/components/detailed_payslip.dart';
 import 'package:mini_projeto/screens/payslip/components/month.dart';
-import 'package:mini_projeto/screens/payslip/constants.dart';
-import 'package:provider/provider.dart';
+import 'package:mini_projeto/screens/payslip/components/payslip_options.dart';
 
 class PayslipBody extends StatefulWidget {
   const PayslipBody({super.key});
@@ -16,6 +14,7 @@ class PayslipBody extends StatefulWidget {
 
 class _PayslipBodyState extends State<PayslipBody> {
   int monthSelected = 11;
+  int payslipOptionSelected = 0;
 
   void selectMonth(int index) {
     setState(() {
@@ -23,16 +22,24 @@ class _PayslipBodyState extends State<PayslipBody> {
     });
   }
 
+  void changePayslipOption(int index) {
+    setState(() {
+      payslipOptionSelected = index;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    final payslip =
-        Provider.of<StateManager>(context, listen: false).lastPayslip!;
+    const List<String> payslipOptions = [
+      "Contracheque detalhado",
+      "Gráficos do contracheque",
+      "Evolução remuneratório",
+    ];
     return Padding(
-      padding: const EdgeInsets.fromLTRB(
-          normalPadding, normalPadding, normalPadding, 0),
+      padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
       child: Column(
         children: [
-          UserCardWidget(),
+          const UserCardWidget(),
           Divider(
             thickness: 1,
             height: 35,
@@ -40,43 +47,34 @@ class _PayslipBodyState extends State<PayslipBody> {
           ),
           SizedBox(
             height: 30,
-            child: Scrollbar(
-              child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-                itemCount: 12,
-                itemBuilder: (context, index) {
-                  return GestureDetector(
-                    onTap: () => selectMonth(index + 1),
-                    child: Month(
-                      index: index + 1,
-                      monthSelected: monthSelected,
-                    ),
-                  );
-                },
-              ),
+            child: ListView.builder(
+              scrollDirection: Axis.horizontal,
+              itemCount: 12,
+              itemBuilder: (context, index) {
+                return GestureDetector(
+                  onTap: () => selectMonth(index + 1),
+                  child: Month(
+                    index: index + 1,
+                    monthSelected: monthSelected,
+                  ),
+                );
+              },
             ),
           ),
+          const SizedBox(height: 12),
           IntrinsicHeight(
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                for (int i = 0; i < payslipInfoList.length; i++) ...[
+                for (int i = 0; i < payslipOptions.length; i++) ...[
                   Expanded(
-                    child: Container(
-                      margin: EdgeInsets.symmetric(vertical: 12),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: i == 0
-                            ? Theme.of(context).colorScheme.surface
-                            : null,
-                      ),
-                      padding: EdgeInsets.all(10),
-                      child: Text(
-                        payslipInfoList[i]["pt-br"]!,
-                        maxLines: 2,
-                        textAlign: TextAlign.center,
-                        style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                            color: Theme.of(context).colorScheme.primary),
+                    child: InkWell(
+                      onTap: () {
+                        changePayslipOption(i);
+                      },
+                      child: PayslipOptions(
+                        title: payslipOptions[i],
+                        selected: payslipOptionSelected == i,
                       ),
                     ),
                   ),
@@ -84,8 +82,13 @@ class _PayslipBodyState extends State<PayslipBody> {
               ],
             ),
           ),
-          SizedBox(height: 12),
-          Expanded(child: DetailedPayslip()),
+          const SizedBox(height: 24),
+          Expanded(
+              child: [
+            const DetailedPayslip(),
+            const EmptyBody(),
+            const EmptyBody()
+          ][payslipOptionSelected]),
         ],
       ),
     );

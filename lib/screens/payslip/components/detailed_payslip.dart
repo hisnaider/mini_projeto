@@ -56,18 +56,18 @@ class _DetailedPayslipState extends State<DetailedPayslip> {
                   child: Column(
                     children: [
                       Text(
-                        kpayslip[i.name]!["name"]["pt-br"].toUpperCase(),
+                        i.name.toUpperCase(),
                         style: Theme.of(context)
                             .textTheme
                             .bodyMedium!
-                            .copyWith(color: kpayslip[i.name]!["color"]),
+                            .copyWith(color: i.color),
                       ),
                       Text(
                         "${payslip.salary[i.name]}",
                         style: Theme.of(context)
                             .textTheme
                             .bodyMedium!
-                            .copyWith(color: kpayslip[i.name]!["color"]),
+                            .copyWith(color: i.color),
                       )
                     ],
                   ),
@@ -88,11 +88,11 @@ class _DetailedPayslipState extends State<DetailedPayslip> {
             child: SingleChildScrollView(
               child: Column(
                 children: [
-                  SizedBox(height: 10),
+                  const SizedBox(height: 10),
                   GestureDetector(
                     onTap: openGrossList,
                     child: _Label(
-                      color: kpayslip["gross"]["color"],
+                      color: PayslipEnum.gross.color,
                       icon: Icons.add_rounded,
                       title: "Rendimentos",
                       openList: showGrossList,
@@ -101,11 +101,11 @@ class _DetailedPayslipState extends State<DetailedPayslip> {
                   _ItemList(list: [
                     {
                       "name": "vencimento basico",
-                      "value": payslip.salary["gross"]! * 0.9
+                      "value": payslip.salary["Bruto"]! * 0.9
                     },
                     {
                       "name": "per capita - saude suplementar",
-                      "value": payslip.salary["gross"]! * 0.1
+                      "value": payslip.salary["Bruto"]! * 0.1
                     },
                   ], open: showGrossList),
                   const Divider(
@@ -116,7 +116,7 @@ class _DetailedPayslipState extends State<DetailedPayslip> {
                   GestureDetector(
                     onTap: openDiscountList,
                     child: _Label(
-                      color: kpayslip["discounts"]["color"],
+                      color: PayslipEnum.discounts.color,
                       icon: Icons.remove_rounded,
                       title: "Descontos",
                       openList: showGrossList,
@@ -125,14 +125,14 @@ class _DetailedPayslipState extends State<DetailedPayslip> {
                   _ItemList(list: [
                     {
                       "name": "unimed/rs per capita patroc",
-                      "value": payslip.salary["discounts"]! * 0.9
+                      "value": payslip.salary["Descontos"]! * 0.9
                     },
                     {
                       "name": "cont. plano seguridade social",
-                      "value": payslip.salary["discounts"]! * 0.1
+                      "value": payslip.salary["Descontos"]! * 0.1
                     },
                   ], open: showDiscountList),
-                  SizedBox(height: hugePadding),
+                  const SizedBox(height: 24),
                 ],
               ),
             ),
@@ -145,8 +145,7 @@ class _DetailedPayslipState extends State<DetailedPayslip> {
 
 class _Label extends StatelessWidget {
   const _Label(
-      {super.key,
-      required this.icon,
+      {required this.icon,
       required this.color,
       required this.title,
       required this.openList});
@@ -194,7 +193,7 @@ class _Label extends StatelessWidget {
 }
 
 class _ItemList extends StatefulWidget {
-  const _ItemList({super.key, required this.list, required this.open});
+  const _ItemList({required this.list, required this.open});
   final List<Map<String, dynamic>> list;
   final bool open;
 
@@ -213,14 +212,11 @@ class _ItemListState extends State<_ItemList> with TickerProviderStateMixin {
   );
   @override
   void initState() {
-    // TODO: implement initState
-
     super.initState();
   }
 
   @override
   void dispose() {
-    // TODO: implement dispose
     _controller.stop();
     _controller.dispose();
     super.dispose();
@@ -244,7 +240,7 @@ class _ItemListState extends State<_ItemList> with TickerProviderStateMixin {
           children: [
             for (int i = 0; i < widget.list.length; i++) ...[
               Padding(
-                padding: const EdgeInsets.all(normalPadding),
+                padding: const EdgeInsets.all(10),
                 child: Row(
                   children: [
                     Expanded(

@@ -16,7 +16,7 @@ class Month extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(
-            "${kmonthNames[index]!.substring(0, 3).toUpperCase()}",
+            kmonthNames[index]!.substring(0, 3).toUpperCase(),
             style: Theme.of(context).textTheme.labelLarge!.copyWith(
                   color: monthSelected == index
                       ? Theme.of(context).colorScheme.primary
@@ -24,7 +24,7 @@ class Month extends StatelessWidget {
                 ),
           ),
           AnimatedContainer(
-            duration: Duration(milliseconds: 250),
+            duration: const Duration(milliseconds: 250),
             height: 4,
             curve: Curves.easeIn,
             width: monthSelected == index ? 60 : 0,

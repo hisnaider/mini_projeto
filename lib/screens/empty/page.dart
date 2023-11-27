@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:mini_projeto/screens/payslip/body.dart';
+import 'package:mini_projeto/screens/empty/body.dart';
 
-class PayslipPage extends StatelessWidget {
-  const PayslipPage({super.key});
+class EmptyPage extends StatelessWidget {
+  const EmptyPage({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Contracheque"),
         leading: GestureDetector(
           onTap: () => context.pop(true),
           child: const Padding(
@@ -23,7 +22,7 @@ class PayslipPage extends StatelessWidget {
         ),
         leadingWidth: 26,
       ),
-      body: const PayslipBody(),
+      body: const EmptyBody(),
     );
   }
 }

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mini_projeto/class/state_manager.dart';
 import 'package:mini_projeto/contants.dart';
-import 'package:mini_projeto/screens/homepage/constants.dart';
 import 'package:provider/provider.dart';
 
 class PayslipWidget extends StatefulWidget {
@@ -48,27 +47,29 @@ class _PayslipWidgetState extends State<PayslipWidget> {
             )
           ],
         ),
-        SizedBox(height: 4),
+        const SizedBox(height: 4),
         Text(
           "Resumo do último contracheque",
           style: Theme.of(context).textTheme.bodyMedium,
         ),
         Row(
           children: [
-            SizedBox(width: 4),
-            buildLastPayslip(
+            _LastPayslip(
               payslipEnum: PayslipEnum.gross,
-              value: payslip.salary["gross"]!,
+              value: payslip.salary["Bruto"]!,
+              visible: visible,
             ),
-            SizedBox(width: bigPadding),
-            buildLastPayslip(
+            const SizedBox(width: 12),
+            _LastPayslip(
               payslipEnum: PayslipEnum.discounts,
-              value: payslip.salary["discounts"]!,
+              value: payslip.salary["Descontos"]!,
+              visible: visible,
             ),
-            SizedBox(width: bigPadding),
-            buildLastPayslip(
+            const SizedBox(width: 12),
+            _LastPayslip(
               payslipEnum: PayslipEnum.liquid,
-              value: payslip.salary["liquid"]!,
+              value: payslip.salary["Liquido"]!,
+              visible: visible,
             ),
           ],
         ),
@@ -77,7 +78,6 @@ class _PayslipWidgetState extends State<PayslipWidget> {
           child: InkWell(
             onTap: () => context.go("/payslip"),
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.end,
               mainAxisSize: MainAxisSize.min,
               children: [
                 Text(
@@ -98,12 +98,20 @@ class _PayslipWidgetState extends State<PayslipWidget> {
       ],
     );
   }
+}
 
-  Widget buildLastPayslip(
-      {required PayslipEnum payslipEnum, required double value}) {
+class _LastPayslip extends StatelessWidget {
+  const _LastPayslip(
+      {required this.payslipEnum, required this.value, required this.visible});
+  final PayslipEnum payslipEnum;
+  final double value;
+  final bool visible;
+
+  @override
+  Widget build(BuildContext context) {
     return Expanded(
       child: Container(
-        margin: const EdgeInsets.symmetric(vertical: 12),
+        margin: const EdgeInsets.fromLTRB(4, 12, 0, 12),
         decoration: BoxDecoration(
           color: Theme.of(context).colorScheme.background,
           boxShadow: [
@@ -113,17 +121,17 @@ class _PayslipWidgetState extends State<PayslipWidget> {
               offset: Offset(0, 5),
             ),
             BoxShadow(
-              color: kpayslip[payslipEnum.name]["color"],
+              color: payslipEnum.color,
               offset: const Offset(-4, 0),
             ),
           ],
           borderRadius: BorderRadius.circular(10),
         ),
         child: Padding(
-          padding: const EdgeInsets.all(normalPadding),
+          padding: const EdgeInsets.all(10),
           child: Column(crossAxisAlignment: CrossAxisAlignment.end, children: [
             Text(
-              kpayslip[payslipEnum.name]["name"]["pt-br"],
+              payslipEnum.name,
               style: Theme.of(context).textTheme.bodyMedium,
             ),
             Row(
@@ -133,17 +141,17 @@ class _PayslipWidgetState extends State<PayslipWidget> {
                 Text(
                   visible ? "$value" : "*******",
                   style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                        color: kpayslip[payslipEnum.name]["color"],
+                        color: payslipEnum.color,
                       ),
                 ),
                 Container(
                   margin: const EdgeInsets.only(left: 5),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(90),
-                    color: kpayslip[payslipEnum.name]["color"],
+                    color: payslipEnum.color,
                   ),
                   child: Icon(
-                    kpayslip[payslipEnum.name]["icon"],
+                    payslipEnum.icon,
                     color: Colors.white,
                     size: 17,
                   ),

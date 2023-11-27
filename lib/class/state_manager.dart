@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'package:flutter/material.dart';
 import 'package:mini_projeto/models/payslip.dart';
 import 'package:mini_projeto/models/user.dart';
@@ -30,9 +32,9 @@ class StateManager extends ChangeNotifier {
       _lastPayslip = PayslipModel(
         id: payslip["id"],
         salary: {
-          "gross": payslip["gross"].toDouble(),
-          "discounts": payslip["discount"].toDouble(),
-          "liquid":
+          "Bruto": payslip["gross"].toDouble(),
+          "Descontos": payslip["discount"].toDouble(),
+          "Liquido":
               payslip["gross"].toDouble() - payslip["discount"].toDouble(),
         },
         month: payslip["month"],

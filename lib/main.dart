@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mini_projeto/class/state_manager.dart';
+import 'package:mini_projeto/screens/empty/page.dart';
 import 'package:mini_projeto/screens/homepage/page.dart';
 import 'package:mini_projeto/screens/payslip/page.dart';
 import 'package:provider/provider.dart';
@@ -23,6 +24,14 @@ class MyApp extends StatelessWidget {
     return MaterialApp.router(
       title: 'Flutter Demo',
       theme: ThemeData(
+        navigationBarTheme: const NavigationBarThemeData(
+          surfaceTintColor: Colors.white,
+          backgroundColor: Colors.white,
+          elevation: 25,
+          shadowColor: Colors.black,
+          indicatorColor: Colors.transparent,
+          indicatorShape: null,
+        ),
         scrollbarTheme: const ScrollbarThemeData(
           thumbColor: MaterialStatePropertyAll(Colors.red),
         ),
@@ -75,6 +84,10 @@ final GoRouter _router = GoRouter(
         GoRoute(
           path: "payslip",
           builder: (context, state) => const PayslipPage(),
+        ),
+        GoRoute(
+          path: "empty",
+          builder: (context, state) => const EmptyPage(),
         ),
       ],
     ),
