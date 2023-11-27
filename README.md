@@ -1,16 +1,8 @@
 # mini_projeto
 
-"A new Flutter project."
+## Como rodar?
 
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+1. Instale o flutter https://docs.flutter.dev/get-started/install;
+2. Clone esse repositório: `git clone https://github.com/hisnaider/mini_projeto.git`;
+3. Vá pra raiz do projeto e rode no terminal o seguinte comando: `flutter pub get`;
+4. Rode o app com o comando `flutter run` ou aperte F5 no Visual Studio Code.
